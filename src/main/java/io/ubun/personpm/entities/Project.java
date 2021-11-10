@@ -11,8 +11,12 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,22 +31,25 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false, name = "project_name")
+	@NotEmpty
 	private String projectName;
 	@Column(name = "project_identifier", unique = true, updatable = false)
+	@NotEmpty
 	private String projectIdentifier;
-	@Column(nullable = false)
+	@Column(nullable = false, name = "description")
+	@NotEmpty
 	private String description;
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date start_date;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Temporal(TemporalType.DATE)
 	private Date end_date;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	@Temporal(TemporalType.DATE)
 	private Date create_At;
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	private Date update_At;
 
 	@PrePersist
